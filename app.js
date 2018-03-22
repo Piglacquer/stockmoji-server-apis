@@ -6,8 +6,8 @@ const language = require('@google-cloud/language')
 const client = new language.LanguageServiceClient({
 	projectId: 'capstone-biffle',
 	credentials: {
-		private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-		client_email: process.env.GOOGLE_CLIENT_EMAIL
+		private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+		client_email: process.env.CLIENT_EMAIL
 	}
 })
 
