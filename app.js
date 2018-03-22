@@ -47,7 +47,7 @@ var params = {
 }
 
 app.get('/', (request, response, next) => {
-	twitClient.get('search/tweets', params, (error, tweets, twitterResponse)).then(resp => {
+	twitClient.get('search/tweets', params, (error, tweets, twitterResponse) => {
 		if (error) {
 			next(error)
 		} else {
