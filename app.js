@@ -41,6 +41,7 @@ function analyze(document) {
 	client
 		.analyzeSentiment({ document: document })
 		.then(results => {
+			console.log(results)
 			sentiment = results[0].documentSentiment
 			return results
 		})
