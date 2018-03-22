@@ -42,7 +42,7 @@ function analyze(document) {
 }
 
 var params = {
-	q: 'aapl',
+	q: 'apple',
 	count: 100
 }
 
