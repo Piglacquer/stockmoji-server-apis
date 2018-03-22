@@ -64,7 +64,6 @@ function analyze(document) {
 // })
 
 app.post('/', (req, res) => {
-	console.log(authorize())
 	analyze(req.body)
 	setTimeout(() => {
 		res.send({ message: sentiment })
