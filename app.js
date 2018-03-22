@@ -21,6 +21,7 @@ const client = new language.LanguageServiceClient({
 app.use(bodyParser.json())
 app.use(cors())
 
+app.listen(process.env.PORT || 3001, () => console.log('listening on port 3001!'))
 // function authorize() {
 // 	return new Promise(resolve => {
 // 		const authFactory = new googleAuth()
@@ -69,5 +70,3 @@ app.post('/', (req, res) => {
 		res.send({ message: sentiment })
 	}, 500)
 })
-
-app.listen(3001 || process.env.PORT, () => console.log('listening on port 3001!'))
