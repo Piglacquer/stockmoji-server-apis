@@ -3,13 +3,14 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
 const language = require('@google-cloud/language')
-const client = new language.LanguageServiceClient({
-	projectId: process.env.PROJECT_ID,
-	credentials: {
-		private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
-		client_email: process.env.CLIENT_EMAIL
-	}
-})
+const client = new language.LanguageServiceClient()
+//   {
+// 	projectId: process.env.PROJECT_ID,
+// 	credentials: {
+// 		private_key: process.env.PRIVATE_KEY.replace(/\\n/g, '\n'),
+// 		client_email: process.env.CLIENT_EMAIL
+// 	}
+// }
 
 const Twitter = require('twitter')
 const twitClient = new Twitter({
@@ -40,23 +41,20 @@ function analyze(document) {
 		})
 }
 
-function getTweets(ticker) {
-	twitClient.get(
-		'/1.1/search/tweets.json?q=' + ticker + '&result_type=popular',
-		(error, tweets, twitterResponse) => {
-			if (error) {
-				next(error)
-			} else {
-				console.log(tweets)
-				response.send({ tweets })
-			}
-		}
-	)
+var params = {
+	q: 'aapl',
+	count: 100
 }
 
-app.get('/:ticker', (request, response, next) => {
-	console.log(req.params)
-	getTweets(req.params)
+app.get('/', (request, response, next) => {
+	twitClient.get('search/tweets', params, (error, tweets, twitterResponse) => {
+		if (error) {
+			next(error)
+		} else {
+			console.log(tweets)
+			response.send({ tweets })
+		}
+	})
 })
 
 app.post('/', (req, res) => {
