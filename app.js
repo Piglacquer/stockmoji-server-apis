@@ -54,8 +54,9 @@ function getTweets(ticker) {
 	)
 }
 
-app.get('/', (request, response, next) => {
-	getTweets(req.body)
+app.get('/:ticker', (request, response, next) => {
+	console.log(req.params)
+	getTweets(req.params)
 })
 
 app.post('/', (req, res) => {
