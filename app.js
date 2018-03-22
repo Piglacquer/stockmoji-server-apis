@@ -40,22 +40,15 @@ function analyze(document) {
 		})
 }
 
-// var params = {
-// 	q: 'nvda',
-// 	count: 100
-// }
-
 app.get('/:ticker', (request, response, next) => {
 	var params = {
 		q: request.params.ticker,
 		count: 100
 	}
-	console.log(request.params.ticker)
 	twitClient.get('search/tweets', params, (error, tweets, twitterResponse) => {
 		if (error) {
 			next(error)
 		} else {
-			console.log(tweets)
 			response.send({ tweets })
 		}
 	})
