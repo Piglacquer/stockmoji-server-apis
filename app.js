@@ -51,17 +51,17 @@ function analyze(document) {
 		})
 }
 
-app.get('/', (request, response, next) => {
-	let params = { id: 23424977 }
-	twitClient.get('search/tweets.json', params, (error, tweets, twitterResponse) => {
-		if (error) {
-			next(error)
-		} else {
-			console.log(tweets)
-			response.send({ tweets })
-		}
-	})
-})
+// app.get('/', (request, response, next) => {
+// 	let params = { id: 23424977 }
+// 	twitClient.get('search/tweets.json', params, (error, tweets, twitterResponse) => {
+// 		if (error) {
+// 			next(error)
+// 		} else {
+// 			console.log(tweets)
+// 			response.send({ tweets })
+// 		}
+// 	})
+// })
 
 app.post('/', (req, res) => {
 	console.log(authorize())
