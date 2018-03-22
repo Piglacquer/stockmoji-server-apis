@@ -43,7 +43,8 @@ function analyze(document) {
 app.get('/:ticker', (request, response, next) => {
 	var params = {
 		q: request.params.ticker,
-		count: 100
+		count: 100,
+		lang: en
 	}
 	twitClient.get('search/tweets', params, (error, tweets, twitterResponse) => {
 		if (error) {
