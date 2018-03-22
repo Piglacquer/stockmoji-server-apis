@@ -42,7 +42,7 @@ function analyze(document) {
 }
 
 var params = {
-	q: 'apple',
+	q: 'nvda',
 	count: 100
 }
 
