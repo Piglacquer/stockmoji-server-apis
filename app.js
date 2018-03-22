@@ -1,5 +1,3 @@
-const jwtClient = require('jwt-client')
-const googleAuth = require('google-auth-library')
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
@@ -13,7 +11,7 @@ const client = new language.LanguageServiceClient()
 // 	client_email: process.env.GOOGLE_CLIENT_EMAIL
 // }
 // }
-// const GOOGLE_APPLICATION_CREDENTIALS = './Capstone-526dbe55bc7e.json'
+
 // const Twitter = require('twitter')
 // const twitClient = new Twitter({
 // 	consumer_key: process.env.CONSUMER_KEY,
@@ -36,15 +34,7 @@ app.use(cors())
 // 		jwtClient.authorize(() => resolve(jwtClient))
 // 	})
 // }
-// The text to analyze
-// const text = 'you are president trump'
-//
-// const documentBasis = {
-// 	content: text,
-// 	type: 'PLAIN_TEXT'
-// }
 
-// analyze(documentBasis)
 let sentiment
 
 function analyze(document) {
@@ -60,17 +50,17 @@ function analyze(document) {
 		})
 }
 
-// app.get('/', (request, response, next) => {
-// 	let params = { id: 23424977 }
-// 	twitClient.get('search/tweets.json', params, (error, tweets, twitterResponse) => {
-// 		if (error) {
-// 			next(error)
-// 		} else {
-// 			console.log(tweets)
-// 			response.send({ tweets })
-// 		}
-// 	})
-// })
+app.get('/', (request, response, next) => {
+	let params = { id: 23424977 }
+	twitClient.get('search/tweets.json', params, (error, tweets, twitterResponse) => {
+		if (error) {
+			next(error)
+		} else {
+			console.log(tweets)
+			response.send({ tweets })
+		}
+	})
+})
 
 app.post('/', (req, res) => {
 	console.log(authorize())
