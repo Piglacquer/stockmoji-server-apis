@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
+
 const language = require('@google-cloud/language')
 const client = new language.LanguageServiceClient({
 	projectId: process.env.PROJECT_ID,
@@ -34,10 +35,7 @@ function analyze(document) {
 			sentiment = results[0].documentSentiment
 			return results
 		})
-		.then()
-		.catch(err => {
-			console.error('ERROR:', err)
-		})
+		.catch(err => console.error('ERROR:', err))
 }
 
 app.get('/:ticker', (request, response, next) => {
