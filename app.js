@@ -2,6 +2,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const app = express()
+const port = process.env.PORT || 3001
 
 const language = require('@google-cloud/language')
 const client = new language.LanguageServiceClient({
@@ -23,18 +24,18 @@ const twitClient = new Twitter({
 app.use(bodyParser.json())
 app.use(cors())
 
-app.listen(process.env.PORT || 3001, () => console.log('listening on port 3001!'))
+app.listen(port, () => console.log(`listening on port ${port}`))
 
 let sentiment
 
 function analyze(document) {
 	client
 		.analyzeSentiment({ document: document })
-		.then(results => {
-			console.log(results)
-			sentiment = results[0].documentSentiment
-			return results
-		})
+		.then(results => results[0].documentSentiment)
+		// 	{
+		// 	sentiment = results[0].documentSentiment
+		// 	return results
+		// })
 		.catch(err => console.error('ERROR:', err))
 }
 
@@ -55,7 +56,8 @@ app.get('/:ticker', (request, response, next) => {
 
 app.post('/', (req, res) => {
 	analyze(req.body)
-	setTimeout(() => {
-		res.send({ message: sentiment })
-	}, 500)
+	.then(results => res.send({message: results}))
+	// setTimeout(() => {
+	// 	res.send({ message: sentiment })
+	// }, 500)
 })
