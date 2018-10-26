@@ -24,25 +24,18 @@ const twitClient = new Twitter({
 app.use(bodyParser.json())
 app.use(cors())
 
-app.listen(port, () => console.log(`listening on port ${port}`))
+app.listen(port, () => console.log(`listening on port ${port}!`))
 
 let sentiment
 
 function analyze(document) {
-	new Promise((resolve, reject) => client
+	client
 		.analyzeSentiment({ document: document })
 		.then(results => {
-			console.log(results)
-			return resolve(results[0].documentSentiment)})
-		// 	{
-		// 	sentiment = results[0].documentSentiment
-		// 	return results
-		// })
-		.catch(err => {
-			reject({"error": err})
-			console.error('ERROR:', err)
+			sentiment = results[0].documentSentiment
+			return results
 		})
-	)
+		.catch(err => console.error('ERROR:', err))
 }
 
 app.get('/:ticker', (request, response, next) => {
@@ -62,8 +55,7 @@ app.get('/:ticker', (request, response, next) => {
 
 app.post('/', (req, res) => {
 	analyze(req.body)
-	.then(results => res.send({message: results}))
-	// setTimeout(() => {
-	// 	res.send({ message: sentiment })
-	// }, 500)
+	setTimeout(() => {
+		res.send({ message: sentiment })
+	}, 500)
 })
