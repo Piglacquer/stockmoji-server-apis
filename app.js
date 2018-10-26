@@ -29,14 +29,20 @@ app.listen(port, () => console.log(`listening on port ${port}`))
 let sentiment
 
 function analyze(document) {
-	client
+	new Promise((resolve, reject) => client
 		.analyzeSentiment({ document: document })
-		.then(results => results[0].documentSentiment)
+		.then(results => {
+			console.log(results)
+			return resolve(results[0].documentSentiment)})
 		// 	{
 		// 	sentiment = results[0].documentSentiment
 		// 	return results
 		// })
-		.catch(err => console.error('ERROR:', err))
+		.catch(err => {
+			reject({"error": err})
+			console.error('ERROR:', err)
+		})
+	)
 }
 
 app.get('/:ticker', (request, response, next) => {
