@@ -2,10 +2,11 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
+const language = require('@google-cloud/language')
+const Twitter = require('twitter')
 const app = express()
 const port = process.env.PORT || 3001
 
-const language = require('@google-cloud/language')
 const client = new language.LanguageServiceClient({
   projectId: process.env.PROJECT_ID,
   credentials: {
@@ -14,7 +15,6 @@ const client = new language.LanguageServiceClient({
   }
 })
 
-const Twitter = require('twitter')
 const twitClient = new Twitter({
   consumer_key: process.env.TWITTER_CONSUMER_KEY,
   consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
