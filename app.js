@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const morgan = require('morgan')
 const app = express()
 const port = process.env.PORT || 3001
 
@@ -23,8 +24,7 @@ const twitClient = new Twitter({
 
 app.use(bodyParser.json())
 app.use(cors())
-
-app.listen(port, () => console.log(`listening on port ${port}!`))
+app.use(morgan('dev'))
 
 let sentiment
 
@@ -59,3 +59,15 @@ app.post('/', (req, res) => {
     return res.send({ message: sentiment })
   }, 500)
 })
+
+app.use((req, res, next) => {
+  console.warn({ 'file not found': req.originalUrl })
+  return res.json('NOT FOUND').sendStatus(404)
+})
+
+app.use((error, req, res, next) => {
+  console.error(error)
+  return res.status(403).send({ 'message': error.message })
+})
+
+app.listen(port, () => console.log(`listening on port ${port}!`))
