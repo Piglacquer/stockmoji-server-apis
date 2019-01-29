@@ -29,6 +29,7 @@ app.use(morgan('dev'))
 let sentiment
 
 const analyze = (document) => {
+  console.log(document)
   client
     .analyzeSentiment({ document: document })
     .then(results => {
