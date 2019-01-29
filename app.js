@@ -29,7 +29,6 @@ const twitClient = new Twitter({
 let sentiment
 
 const analyze = (document) => {
-  console.log(document)
   client
     .analyzeSentiment({ document: document })
     .then(results => {
@@ -56,7 +55,7 @@ app.get('/:ticker', (request, response, next) => {
 
 app.post('/', (req, res) => {
   analyze(req.body)
-  return res.send({ message: sentiment })
+  return res.send(sentiment)
 })
 
 app.use((req, res, next) => {
