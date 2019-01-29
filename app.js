@@ -6,7 +6,6 @@ const language = require('@google-cloud/language')
 const Twitter = require('twitter')
 const app = express()
 const port = process.env.PORT || 3001
-const dotenv = require('dotenv').config()
 
 app.use(bodyParser.json())
 app.use(cors())
