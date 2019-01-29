@@ -55,7 +55,7 @@ app.get('/:ticker', (request, response, next) => {
 
 app.post('/', (req, res) => {
   analyze(req.body)
-  return res.send(sentiment)
+  return res.status(200).send(sentiment)
 })
 
 app.use((req, res, next) => {
