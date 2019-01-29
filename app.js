@@ -6,6 +6,11 @@ const language = require('@google-cloud/language')
 const Twitter = require('twitter')
 const app = express()
 const port = process.env.PORT || 3001
+const dotenv = require('dotenv').config()
+
+app.use(bodyParser.json())
+app.use(cors())
+app.use(morgan('dev'))
 
 const client = new language.LanguageServiceClient({
   projectId: process.env.PROJECT_ID,
@@ -21,10 +26,6 @@ const twitClient = new Twitter({
   access_token_key: process.env.TWITTER_ACCESS_TOKEN,
   access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 })
-
-app.use(bodyParser.json())
-app.use(cors())
-app.use(morgan('dev'))
 
 let sentiment
 
@@ -56,9 +57,7 @@ app.get('/:ticker', (request, response, next) => {
 
 app.post('/', (req, res) => {
   analyze(req.body)
-  setTimeout(() => {
-    return res.send({ message: sentiment })
-  }, 500)
+  return res.send({ message: sentiment })
 })
 
 app.use((req, res, next) => {
